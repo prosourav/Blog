@@ -7,7 +7,8 @@ import {
   TextareaAutosize,
 } from "@material-ui/core";
 import { AddCircle } from "@material-ui/icons";
-import React from "react";
+import React, { useState } from "react";
+import { createPost } from "../../service/api";
 
 const useStyle = makeStyles((theme) => ({
   container: {
@@ -40,24 +41,50 @@ const useStyle = makeStyles((theme) => ({
   },
 }));
 
+const initialValue = {
+  title: "",
+  description: "",
+  picture: "",
+  username: "Sourav saha",
+  categories: "All",
+  createdDate: new Date(),
+};
+
 const Create = () => {
+  const [post, setPost] = useState(initialValue);
   const classes = useStyle();
   const url =
     "https://images.unsplash.com/photo-1543128639-4cb7e6eeef1b?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8bGFwdG9wJTIwc2V0dXB8ZW58MHx8MHx8&ixlib=rb-1.2.1&w=1000&q=80";
+
+  function handleChange(e) {
+    setPost({ ...post, [e.target.name]: e.target.value });
+  }
+
+  const savePost = async () => {
+    await createPost(post);
+  };
+
   return (
     <Box className={classes.container}>
       <img className={classes.image} src={url} alt="Loading..." />
       <FormControl className={classes.form}>
         <AddCircle fontSize="large" color="action" />
-        <InputBase placeholder="title" className={classes.textField} />
-        <Button variant="contained" color="primary">
+        <InputBase
+          name="title"
+          onChange={handleChange}
+          placeholder="title"
+          className={classes.textField}
+        />
+        <Button variant="contained" color="primary" onClick={savePost}>
           Publish
         </Button>
       </FormControl>
       <TextareaAutosize
-        rows={5}
+        minRows={5}
         placeholder="tell your story...."
         className={classes.textArea}
+        onChange={handleChange}
+        name="description"
       />
     </Box>
   );

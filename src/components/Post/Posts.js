@@ -6,9 +6,9 @@ const Posts = () => {
   const post = [1, 2, 3, 4, 5, 6, 7, 8, 9];
   return (
     <>
-      {post.map((post) => {
+      {post.map((id) => {
         return (
-          <Grid item lg={3} sm={4} xs={12}>
+          <Grid item lg={3} sm={4} xs={12} key={id}>
             <Post />
           </Grid>
         );
