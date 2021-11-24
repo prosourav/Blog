@@ -14,9 +14,9 @@ function App() {
       <Box style={{ marginTop: 64 }}>
         <Switch>
           <Route exact path="/" component={Home} />
-          <Route path="/details" component={Details} />
+          <Route path="/details/:id" component={Details} />
           <Route path="/create" component={Create} />
-          <Route path="/update" component={Update} />
+          <Route path="/update/:id" component={Update} />
         </Switch>
       </Box>
     </BrowserRouter>

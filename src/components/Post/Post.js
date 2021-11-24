@@ -37,20 +37,23 @@ const useStyle = makeStyles({
   },
 });
 
-const Post = () => {
+const Post = ({ posts }) => {
   const classes = useStyle();
   const history = useHistory();
   const url =
+    posts.picture ||
     "https://images.unsplash.com/photo-1498050108023-c5249f4df085?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=752&q=80";
+
   return (
-    <Box className={classes.container} onClick={() => history.push("/details")}>
+    <Box
+      className={classes.container}
+      onClick={() => history.push(`/details/${posts._id}`)}
+    >
       <img src={url} alt="Loading..." className={classes.image} />
-      <Typography className={classes.text}>Music</Typography>
-      <Typography className={classes.heading}>Code for Interview</Typography>
-      <Typography className={classes.text}>
-        Author:Code For Interview
-      </Typography>
-      <Typography className={classes.detail}>Code for Interview</Typography>
+      <Typography className={classes.text}>{posts.categories}</Typography>
+      <Typography className={classes.heading}>{posts.title}</Typography>
+      <Typography className={classes.text}>Author:{posts.username}</Typography>
+      <Typography className={classes.detail}>{posts.description}</Typography>
     </Box>
   );
 };

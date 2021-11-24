@@ -1,6 +1,9 @@
 import { Box, makeStyles, Typography } from "@material-ui/core";
 import { Delete, Edit } from "@material-ui/icons";
 import { Link } from "react-router-dom";
+import { useParams } from "react-router";
+import { useEffect, useState } from "react";
+import { getPost } from "../../service/api";
 
 //components
 
@@ -48,8 +51,19 @@ const useStyle = makeStyles((theme) => ({
 
 const Details = () => {
   const classes = useStyle();
+  const { id } = useParams();
+  const [data, setData] = useState({});
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await getPost(id);
+      setData(response);
+    };
+    fetchData();
+  }, []);
 
   const url =
+    data.picture ||
     "https://images.unsplash.com/photo-1543128639-4cb7e6eeef1b?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8bGFwdG9wJTIwc2V0dXB8ZW58MHx8MHx8&ixlib=rb-1.2.1&w=1000&q=80";
   return (
     <div>
@@ -57,27 +71,27 @@ const Details = () => {
         <img src={url} alt="post" className={classes.image} />
 
         <Box className={classes.icons}>
-          <Link to="/update">
+          <Link to={`/update/${data._id}`}>
             {" "}
             <Edit className={classes.icon} color="primary" />{" "}
           </Link>
           <Delete className={classes.icon} color="error" />
         </Box>
-        <Typography className={classes.heading}>Heading of the blog</Typography>
+        <Typography className={classes.heading}>{data.title}</Typography>
 
         <Box className={classes.subheading}>
           <Link className={classes.link}>
             <Typography>
-              Author:{" "}
-              <span style={{ fontWeight: 600 }}>Code for Interview</span>
+              Author:
+              <span style={{ fontWeight: 600 }}>{data.username}</span>
             </Typography>
           </Link>
           <Typography style={{ marginLeft: "auto" }}>
-            {new Date().toDateString()}
+            {new Date(data.createdDate).toDateString()}
           </Typography>
         </Box>
 
-        <Typography className={classes.detail}>Detail of Blog</Typography>
+        <Typography className={classes.detail}>{data.description}</Typography>
       </Box>
     </div>
   );
