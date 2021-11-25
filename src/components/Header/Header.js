@@ -1,4 +1,5 @@
 import { AppBar, makeStyles, Toolbar, Typography } from "@material-ui/core";
+import { useOktaAuth } from "@okta/okta-react";
 import React from "react";
 
 import { useHistory } from "react-router";
@@ -20,6 +21,19 @@ const useStyles = makeStyles({
 const Header = () => {
   const history = useHistory();
   const classes = useStyles();
+  const { oktaAuth, authState } = useOktaAuth();
+
+  if (!authState) return null;
+
+  const login = async () => history.push("/login");
+  const logout = async () => oktaAuth.signOut();
+
+  const button = authState.isAuthenticated ? (
+    <button onClick={logout}>Logout</button>
+  ) : (
+    <button onClick={login}>Login</button>
+  );
+
   return (
     <AppBar>
       <Toolbar className={classes.component}>
