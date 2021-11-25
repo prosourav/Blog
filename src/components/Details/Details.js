@@ -1,9 +1,9 @@
 import { Box, makeStyles, Typography } from "@material-ui/core";
 import { Delete, Edit } from "@material-ui/icons";
 import { Link } from "react-router-dom";
-import { useParams } from "react-router";
+import { useHistory, useLocation, useParams } from "react-router";
 import { useEffect, useState } from "react";
-import { getPost } from "../../service/api";
+import { getPost, deleteItem } from "../../service/api";
 
 //components
 
@@ -52,6 +52,7 @@ const useStyle = makeStyles((theme) => ({
 const Details = () => {
   const classes = useStyle();
   const { id } = useParams();
+  const history = useHistory();
   const [data, setData] = useState({});
 
   useEffect(() => {
@@ -61,6 +62,11 @@ const Details = () => {
     };
     fetchData();
   }, []);
+
+  const deletePost = async () => {
+    await deleteItem(id);
+    history.push(`/`);
+  };
 
   const url =
     data.picture ||
@@ -75,17 +81,18 @@ const Details = () => {
             {" "}
             <Edit className={classes.icon} color="primary" />{" "}
           </Link>
-          <Delete className={classes.icon} color="error" />
+          <Delete className={classes.icon} color="error" onClick={deletePost} />
         </Box>
         <Typography className={classes.heading}>{data.title}</Typography>
 
         <Box className={classes.subheading}>
-          <Link className={classes.link}>
-            <Typography>
-              Author:
+          <Typography>
+            Author:
+            <Link to={`/?userName=${data.username}`} className={classes.link}>
               <span style={{ fontWeight: 600 }}>{data.username}</span>
-            </Typography>
-          </Link>
+            </Link>
+          </Typography>
+
           <Typography style={{ marginLeft: "auto" }}>
             {new Date(data.createdDate).toDateString()}
           </Typography>

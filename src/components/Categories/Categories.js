@@ -9,6 +9,7 @@ import {
 } from "@material-ui/core";
 import React from "react";
 import { useHistory } from "react-router";
+import { Link } from "react-router-dom";
 import { category } from "../../constants/data";
 
 const useStyle = makeStyles({
@@ -20,6 +21,10 @@ const useStyle = makeStyles({
   },
   table: {
     border: "1px solid rgba(224,224,224,1)",
+  },
+  link: {
+    textDecoration: "none",
+    color: "inherit",
   },
 });
 
@@ -39,14 +44,22 @@ const Categories = () => {
       <Table className={classes.table}>
         <TableHead>
           <TableRow>
-            <TableCell>All Categories</TableCell>
+            <TableCell>
+              <Link to={"/"} className={classes.link}>
+                All Categories{" "}
+              </Link>
+            </TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {category.map((item, id) => {
             return (
               <TableRow key={id}>
-                <TableCell>{item}</TableCell>
+                <TableCell>
+                  <Link to={`/?categories=${item}`} className={classes.link}>
+                    {item}
+                  </Link>
+                </TableCell>
               </TableRow>
             );
           })}
