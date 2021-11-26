@@ -7,8 +7,9 @@ import {
   TextareaAutosize,
 } from "@material-ui/core";
 import { AddCircle } from "@material-ui/icons";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useHistory } from "react-router";
+import { LoginContext } from "../../Context/ContextProvider";
 import { createPost, uploadFile } from "../../service/api";
 
 const useStyle = makeStyles((theme) => ({
@@ -45,8 +46,8 @@ const initialValue = {
   title: "",
   description: "",
   picture: "",
-  username: "Sourav saha",
-  categories: "sports",
+  username: "",
+  categories: "Sports",
   createdDate: new Date(),
 };
 
@@ -56,6 +57,7 @@ const Create = () => {
   const [ImageURL, setImageURL] = useState("");
   const classes = useStyle();
   const history = useHistory();
+  const { account, setAccount } = useContext(LoginContext);
 
   useEffect(() => {
     const getImage = async () => {
@@ -63,6 +65,7 @@ const Create = () => {
         const formData = new FormData();
         formData.append("name", file.name);
         formData.append("file", file);
+
         const image = await uploadFile(formData);
         post.picture = image.data;
         setImageURL(image.data);
@@ -76,15 +79,17 @@ const Create = () => {
     "https://images.unsplash.com/photo-1543128639-4cb7e6eeef1b?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8bGFwdG9wJTIwc2V0dXB8ZW58MHx8MHx8&ixlib=rb-1.2.1&w=1000&q=80";
 
   function handleChange(e) {
-    setPost({ ...post, [e.target.name]: e.target.value });
+    setPost({
+      ...post,
+      username: account,
+      [e.target.name]: e.target.value,
+    });
   }
 
   const savePost = async () => {
     await createPost(post);
     history.push("/");
   };
-
-  // console.log(file);
 
   return (
     <Box className={classes.container}>

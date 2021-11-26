@@ -17,13 +17,14 @@ const Posts = () => {
 
   return (
     <>
-      {posts.map((posts) => {
-        return (
-          <Grid item lg={3} sm={4} xs={12} key={posts._id}>
-            <Post posts={posts} />
-          </Grid>
-        );
-      })}
+      {posts &&
+        posts.map((posts) => {
+          return (
+            <Grid item lg={3} sm={4} xs={12} key={posts._id}>
+              <Post posts={posts} />
+            </Grid>
+          );
+        })}
     </>
   );
 };

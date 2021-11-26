@@ -45,10 +45,34 @@ export const deleteItem = async (id) => {
 };
 
 export const uploadFile = async (post) => {
-  // console.log(data);
   try {
-    // return await axios.post(`${url}/file/upload/${data}`);
     return await axios.post(`${url}/file/upload`, post);
+  } catch (error) {
+    console.log("error while fetching data from database ", error);
+  }
+};
+
+export const newComment = async (postComment) => {
+  try {
+    return await axios.post(`${url}/comment/new`, postComment);
+  } catch (error) {
+    console.log("error while fetching data from database ", error);
+  }
+};
+
+export const getComments = async (id) => {
+  try {
+    const response = await axios.get(`${url}/comment/${id}`);
+    return response.data;
+  } catch (error) {
+    console.log("error while fetching data from database ", error);
+  }
+};
+
+export const deleteComment = async (id) => {
+  console.log({ id });
+  try {
+    return await axios.delete(`${url}/comment/delete/${id}`);
   } catch (error) {
     console.log("error while fetching data from database ", error);
   }

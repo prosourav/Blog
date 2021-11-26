@@ -2,8 +2,10 @@ import { Box, makeStyles, Typography } from "@material-ui/core";
 import { Delete, Edit } from "@material-ui/icons";
 import { Link } from "react-router-dom";
 import { useHistory, useLocation, useParams } from "react-router";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { getPost, deleteItem } from "../../service/api";
+import Comments from "../Comments/Comments";
+import { LoginContext } from "../../Context/ContextProvider";
 
 //components
 
@@ -54,6 +56,7 @@ const Details = () => {
   const { id } = useParams();
   const history = useHistory();
   const [data, setData] = useState({});
+  const { account, setAccount } = useContext(LoginContext);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -72,10 +75,9 @@ const Details = () => {
     data.picture ||
     "https://images.unsplash.com/photo-1543128639-4cb7e6eeef1b?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8bGFwdG9wJTIwc2V0dXB8ZW58MHx8MHx8&ixlib=rb-1.2.1&w=1000&q=80";
   return (
-    <div>
-      <Box className={classes.container}>
-        <img src={url} alt="post" className={classes.image} />
-
+    <Box className={classes.container}>
+      <img src={url} alt="post" className={classes.image} />
+      {account === data.username && (
         <Box className={classes.icons}>
           <Link to={`/update/${data._id}`}>
             {" "}
@@ -83,24 +85,25 @@ const Details = () => {
           </Link>
           <Delete className={classes.icon} color="error" onClick={deletePost} />
         </Box>
-        <Typography className={classes.heading}>{data.title}</Typography>
+      )}
+      <Typography className={classes.heading}>{data.title}</Typography>
 
-        <Box className={classes.subheading}>
-          <Typography>
-            Author:
-            <Link to={`/?userName=${data.username}`} className={classes.link}>
-              <span style={{ fontWeight: 600 }}>{data.username}</span>
-            </Link>
-          </Typography>
+      <Box className={classes.subheading}>
+        <Typography>
+          Author:
+          <Link to={`/?userName=${data.username}`} className={classes.link}>
+            <span style={{ fontWeight: 600 }}>{data.username}</span>
+          </Link>
+        </Typography>
 
-          <Typography style={{ marginLeft: "auto" }}>
-            {new Date(data.createdDate).toDateString()}
-          </Typography>
-        </Box>
-
-        <Typography className={classes.detail}>{data.description}</Typography>
+        <Typography style={{ marginLeft: "auto" }}>
+          {new Date(data.createdDate).toDateString()}
+        </Typography>
       </Box>
-    </div>
+
+      <Typography className={classes.detail}>{data.description}</Typography>
+      <Comments post={data} />
+    </Box>
   );
 };
 

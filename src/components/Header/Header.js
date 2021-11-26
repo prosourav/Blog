@@ -16,6 +16,14 @@ const useStyles = makeStyles({
   link: {
     cursor: "pointer",
   },
+  button: {
+    background: "unset",
+    textTransform: "uppercase",
+    border: "none",
+    fontFamily: "Roboto",
+    fontSize: 17,
+    cursor: "pointer",
+  },
 });
 
 const Header = () => {
@@ -29,7 +37,9 @@ const Header = () => {
   const logout = async () => oktaAuth.signOut();
 
   const button = authState.isAuthenticated ? (
-    <button onClick={logout}>Logout</button>
+    <button onClick={logout} className={classes.button}>
+      Logout
+    </button>
   ) : (
     <button onClick={login}>Login</button>
   );
@@ -56,7 +66,7 @@ const Header = () => {
           className={classes.link}
           onClick={() => history.push("/login")}
         >
-          LOGIN
+          {button}
         </Typography>
       </Toolbar>
     </AppBar>
