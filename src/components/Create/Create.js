@@ -8,7 +8,7 @@ import {
 } from "@material-ui/core";
 import { AddCircle } from "@material-ui/icons";
 import React, { useContext, useEffect, useState } from "react";
-import { useHistory } from "react-router";
+import { useHistory, useLocation } from "react-router";
 import { LoginContext } from "../../Context/ContextProvider";
 import { createPost, uploadFile } from "../../service/api";
 
@@ -57,6 +57,7 @@ const Create = () => {
   const [ImageURL, setImageURL] = useState("");
   const classes = useStyle();
   const history = useHistory();
+  const location = useLocation();
   const { account, setAccount } = useContext(LoginContext);
 
   useEffect(() => {
@@ -72,6 +73,8 @@ const Create = () => {
       }
     };
     getImage();
+    post.categories = location.search?.split("=")[1] || "All";
+    post.username = account;
   }, [file]);
 
   const url =
@@ -81,10 +84,10 @@ const Create = () => {
   function handleChange(e) {
     setPost({
       ...post,
-      username: account,
       [e.target.name]: e.target.value,
     });
   }
+  console.log("post.picture 1", post.picture);
 
   const savePost = async () => {
     await createPost(post);
