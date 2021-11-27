@@ -8,7 +8,7 @@ import {
 } from "@material-ui/core";
 import { AddCircle } from "@material-ui/icons";
 import React, { useEffect, useState } from "react";
-import { useHistory } from "react-router";
+import { useHistory } from "react-router-dom";
 import { getPost, getUpdate, uploadFile } from "../../service/api";
 
 const useStyle = makeStyles((theme) => ({

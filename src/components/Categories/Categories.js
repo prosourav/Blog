@@ -8,7 +8,7 @@ import {
   TableRow,
 } from "@material-ui/core";
 import React from "react";
-import { useHistory } from "react-router";
+import { useHistory } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { category } from "../../constants/data";
 

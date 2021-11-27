@@ -8,7 +8,7 @@ import {
 } from "@material-ui/core";
 import { AddCircle } from "@material-ui/icons";
 import React, { useContext, useEffect, useState } from "react";
-import { useHistory, useLocation } from "react-router";
+import { useHistory, useLocation } from "react-router-dom";
 import { LoginContext } from "../../Context/ContextProvider";
 import { createPost, uploadFile } from "../../service/api";
 

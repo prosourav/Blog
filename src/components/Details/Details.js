@@ -1,7 +1,7 @@
 import { Box, makeStyles, Typography } from "@material-ui/core";
 import { Delete, Edit } from "@material-ui/icons";
 import { Link } from "react-router-dom";
-import { useHistory, useLocation, useParams } from "react-router";
+import { useHistory, useLocation, useParams } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
 import { getPost, deleteItem } from "../../service/api";
 import Comments from "../Comments/Comments";

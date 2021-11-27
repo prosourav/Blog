@@ -1,7 +1,7 @@
 import { Box, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
 import React from "react";
-import { useHistory } from "react-router";
+import { useHistory } from "react-router-dom";
 
 const useStyle = makeStyles({
   container: {

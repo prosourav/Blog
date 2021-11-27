@@ -2,7 +2,7 @@ import { AppBar, makeStyles, Toolbar, Typography } from "@material-ui/core";
 import { useOktaAuth } from "@okta/okta-react";
 import React from "react";
 
-import { useHistory } from "react-router";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles({
   component: {

@@ -1,6 +1,6 @@
 import { Grid } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
-import { useLocation } from "react-router";
+import { useLocation } from "react-router-dom";
 import { getPosts } from "../../service/api";
 import Post from "./Post";
 
